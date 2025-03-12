@@ -46,8 +46,21 @@ const Home = () => {
     setError(null);
     setLastQuery(query);
 
+    // Validate query before making API call
+    if (!query.trim()) {
+      setLoading(false);
+      setError("Please enter valid ingredients or a recipe name");
+      return;
+    }
+
     try {
       const response = await searchRecipes(query, searchFilters);
+
+      // Check if we got any results
+      if (response.results.length === 0) {
+        setError("No recipes found. Try different ingredients or keywords.");
+      }
+
       setRecipes(response.results);
     } catch (err) {
       setError(
@@ -181,7 +194,23 @@ const Home = () => {
                 </div>
               ) : error ? (
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
-                  <div className="text-red-600 text-center">{error}</div>
+                  <div className="flex flex-col items-center justify-center py-6">
+                    <div className="error-message w-full max-w-md animate-fadeIn mb-4">
+                      <div className="text-red-600 font-medium">{error}</div>
+                      <p className="text-gray-600 text-sm mt-1">
+                        Try using different keywords or check your spelling.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setError(null);
+                        setLastQuery("");
+                      }}
+                      className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                    >
+                      Try again
+                    </button>
+                  </div>
                 </div>
               ) : recipes.length > 0 ? (
                 <div>

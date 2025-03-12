@@ -69,7 +69,7 @@ const FilterSection = ({
   children: React.ReactNode;
   badge?: number;
 }) => (
-  <div className="border rounded-lg">
+  <div className="border border-gray-200 rounded-lg">
     <button
       onClick={onToggle}
       className="w-full px-4 py-2 flex items-center justify-between text-left hover:bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -98,7 +98,7 @@ const FilterSection = ({
         />
       </svg>
     </button>
-    {isOpen && <div className="p-4 border-t">{children}</div>}
+    {isOpen && <div className="p-4 border-t border-gray-200">{children}</div>}
   </div>
 );
 
@@ -150,7 +150,7 @@ const Filters = ({ filters, onChange, onClear }: FiltersProps) => {
     (filters.intolerances && filters.intolerances.length > 0);
 
   return (
-    <div className="space-y-4 p-4 bg-white rounded-lg shadow-sm">
+    <div className="p-2">
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-medium text-gray-900">Filters</h2>
         {hasActiveFilters && (
@@ -174,7 +174,7 @@ const Filters = ({ filters, onChange, onClear }: FiltersProps) => {
           <select
             value={filters.diet || ""}
             onChange={(e) => handleDietChange(e.target.value)}
-            className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="w-full rounded-md border-gray-300 shadow-sm focus:border-brand-herb-500 focus:ring-brand-herb-500"
           >
             <option value="">Any</option>
             {DIETS.map(([diet, emoji]) => (
@@ -201,7 +201,7 @@ const Filters = ({ filters, onChange, onClear }: FiltersProps) => {
                   type="checkbox"
                   checked={(filters.intolerances || []).includes(intolerance)}
                   onChange={() => handleIntoleranceChange(intolerance)}
-                  className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="rounded border-gray-300 text-brand-herb-500 focus:ring-brand-herb-500"
                 />
                 <span className="truncate">
                   {emoji} {intolerance}
@@ -220,7 +220,7 @@ const Filters = ({ filters, onChange, onClear }: FiltersProps) => {
           <select
             value={filters.cuisine || ""}
             onChange={(e) => handleCuisineChange(e.target.value)}
-            className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+            className="w-full rounded-md border-gray-300 shadow-sm focus:border-brand-herb-500 focus:ring-brand-herb-500"
           >
             <option value="">Any</option>
             {CUISINES.map(([cuisine, emoji]) => (

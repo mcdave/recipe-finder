@@ -237,8 +237,11 @@ const RecipeDetail = () => {
                 {recipe?.extendedIngredients &&
                 recipe.extendedIngredients.length > 0 ? (
                   <ul className="space-y-2">
-                    {recipe.extendedIngredients.map((ingredient) => (
-                      <li key={ingredient.id} className="flex items-start">
+                    {recipe.extendedIngredients.map((ingredient, index) => (
+                      <li
+                        key={`${ingredient.id}-${index}`}
+                        className="flex items-start"
+                      >
                         <span className="text-green-500 mr-2">•</span>
                         <span>{ingredient.original}</span>
                       </li>
