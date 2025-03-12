@@ -5,6 +5,14 @@ export interface Recipe {
   readyInMinutes: number;
   servings: number;
   summary: string;
+  instructions?: string;
+  extendedIngredients?: Ingredient[];
+  dishTypes?: string[];
+  diets?: string[];
+  cuisines?: string[];
+  healthScore?: number;
+  sourceUrl?: string;
+  sourceName?: string;
 }
 
 export interface SearchResponse {
@@ -74,4 +82,12 @@ export interface SearchFilters {
   diet?: Diet;
   intolerances?: Intolerance[];
   cuisine?: Cuisine;
+}
+
+export interface Ingredient {
+  id: number;
+  name: string;
+  amount: number;
+  unit: string;
+  original: string;
 }

@@ -1,12 +1,21 @@
 import { Recipe } from "../types/recipe";
 import { useState } from "react";
+import { HeartIcon as HeartIconOutline } from "@heroicons/react/24/outline";
+import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 
 interface RecipeCardProps {
   recipe: Recipe;
   onClick: (id: number) => void;
+  isFavorite?: boolean;
+  onFavoriteToggle?: (recipe: Recipe) => void;
 }
 
-const RecipeCard = ({ recipe, onClick }: RecipeCardProps) => {
+const RecipeCard = ({
+  recipe,
+  onClick,
+  isFavorite = false,
+  onFavoriteToggle,
+}: RecipeCardProps) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
 
@@ -15,10 +24,17 @@ const RecipeCard = ({ recipe, onClick }: RecipeCardProps) => {
     setImageLoading(false);
   };
 
+  const handleFavoriteClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent card click event
+    if (onFavoriteToggle) {
+      onFavoriteToggle(recipe);
+    }
+  };
+
   return (
     <article
       onClick={() => onClick(recipe.id)}
-      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow focus-within:ring-2 focus-within:ring-blue-500"
+      className="bg-white rounded-lg shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition-shadow focus-within:ring-2 focus-within:ring-blue-500 relative"
       tabIndex={0}
       role="button"
       aria-label={`View recipe for ${recipe.title}`}
@@ -29,6 +45,21 @@ const RecipeCard = ({ recipe, onClick }: RecipeCardProps) => {
         }
       }}
     >
+      {/* Favorite button */}
+      {onFavoriteToggle && (
+        <button
+          onClick={handleFavoriteClick}
+          className="absolute top-2 right-2 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white transition-colors z-10 group"
+          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+        >
+          {isFavorite ? (
+            <HeartIconSolid className="w-5 h-5 text-red-500 group-hover:text-red-600 transition-colors" />
+          ) : (
+            <HeartIconOutline className="w-5 h-5 text-gray-700 group-hover:text-red-500 transition-colors" />
+          )}
+        </button>
+      )}
+
       <div className="relative aspect-video">
         {imageLoading && (
           <div className="absolute inset-0 bg-gray-100 animate-pulse" />
@@ -61,7 +92,16 @@ const RecipeCard = ({ recipe, onClick }: RecipeCardProps) => {
           </span>
           <span className="flex items-center gap-1">
             <span className="sr-only">Servings:</span>
-            <span aria-hidden="true">👥</span> {recipe.servings} servings
+            <span aria-hidden="true">
+              {recipe.servings <= 1
+                ? "🧑"
+                : recipe.servings <= 2
+                ? "👥"
+                : recipe.servings <= 4
+                ? "👨‍👩‍👧"
+                : "👨‍👩‍👧‍👧"}
+            </span>{" "}
+            {recipe.servings} {recipe.servings === 1 ? "serving" : "servings"}
           </span>
         </div>
       </div>
