@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 import RecipeCard from "../../components/RecipeCard";
 import { Recipe } from "../../types/recipe";
 
@@ -9,6 +10,10 @@ const meta: Meta<typeof RecipeCard> = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  argTypes: {
+    onClick: { action: "clicked" },
+    onFavoriteToggle: { action: "favorite toggled" },
+  },
 };
 
 export default meta;
@@ -32,27 +37,25 @@ const sampleRecipe: Recipe = {
 export const Default: Story = {
   args: {
     recipe: sampleRecipe,
-    onClick: (id) => console.log(`Clicked recipe with id: ${id}`),
+    onClick: fn(),
   },
 };
 
 export const WithFavoriteButton: Story = {
   args: {
     recipe: sampleRecipe,
-    onClick: (id) => console.log(`Clicked recipe with id: ${id}`),
+    onClick: fn(),
     isFavorite: false,
-    onFavoriteToggle: (recipe) =>
-      console.log(`Toggled favorite for: ${recipe.title}`),
+    onFavoriteToggle: fn(),
   },
 };
 
 export const Favorited: Story = {
   args: {
     recipe: sampleRecipe,
-    onClick: (id) => console.log(`Clicked recipe with id: ${id}`),
+    onClick: fn(),
     isFavorite: true,
-    onFavoriteToggle: (recipe) =>
-      console.log(`Toggled favorite for: ${recipe.title}`),
+    onFavoriteToggle: fn(),
   },
 };
 
@@ -63,7 +66,7 @@ export const LongTitle: Story = {
       title:
         "Super Delicious Spaghetti Carbonara with Crispy Pancetta and Freshly Ground Black Pepper",
     },
-    onClick: (id) => console.log(`Clicked recipe with id: ${id}`),
+    onClick: fn(),
   },
 };
 
@@ -73,6 +76,6 @@ export const NoImage: Story = {
       ...sampleRecipe,
       image: "https://invalid-image-url.jpg",
     },
-    onClick: (id) => console.log(`Clicked recipe with id: ${id}`),
+    onClick: fn(),
   },
 };

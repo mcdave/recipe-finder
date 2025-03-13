@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 import Filters from "../../components/Filters";
 import { SearchFilters } from "../../types/recipe";
 import { useState } from "react";
@@ -10,6 +11,10 @@ const meta: Meta<typeof Filters> = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  argTypes: {
+    onChange: { action: "filters changed" },
+    onClear: { action: "filters cleared" },
+  },
 };
 
 export default meta;
@@ -47,8 +52,8 @@ export const WithPreselectedFilters: Story = {
       intolerances: ["Dairy", "Gluten"],
       cuisine: "Italian",
     },
-    onChange: (filters) => console.log("Filters changed:", filters),
-    onClear: () => console.log("Filters cleared"),
+    onChange: fn(),
+    onClear: fn(),
   },
   decorators: [
     (Story) => (

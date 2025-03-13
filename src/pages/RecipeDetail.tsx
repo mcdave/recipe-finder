@@ -24,8 +24,11 @@ const RecipeDetail = () => {
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
 
+  console.log("recipe", recipe);
+
   useEffect(() => {
     const fetchRecipe = async () => {
+      console.log("fetchRecipe", id);
       if (!id) return;
 
       setLoading(true);
@@ -38,9 +41,12 @@ const RecipeDetail = () => {
         const recipeData = await getRecipeById(parseInt(id));
         setRecipe(recipeData);
 
+        console.log("recipeData", recipeData);
+
         // Check if recipe is in favorites
         setIsFavorite(isRecipeFavorite(recipeData));
       } catch (err) {
+        console.log("err", err);
         setError(
           err instanceof Error ? err.message : "Failed to load recipe details"
         );

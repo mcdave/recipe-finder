@@ -1,5 +1,9 @@
 import type { Preview } from "@storybook/react";
 import "../src/index.css"; // Import the Tailwind CSS styles
+import { initialize, mswLoader } from "msw-storybook-addon";
+
+// Initialize MSW
+initialize();
 
 const preview: Preview = {
   parameters: {
@@ -10,6 +14,7 @@ const preview: Preview = {
       },
     },
   },
+  loaders: [mswLoader],
 };
 
 export default preview;

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 import FilterBadges from "../../components/FilterBadges";
 
 const meta: Meta<typeof FilterBadges> = {
@@ -8,6 +9,9 @@ const meta: Meta<typeof FilterBadges> = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  argTypes: {
+    onRemove: { action: "filter removed" },
+  },
 };
 
 export default meta;
@@ -20,7 +24,7 @@ export const WithAllFilters: Story = {
       intolerances: ["Dairy", "Gluten"],
       cuisine: "Italian",
     },
-    onRemove: (type, value) => console.log(`Removed ${type} ${value || ""}`),
+    onRemove: fn(),
   },
 };
 
@@ -31,7 +35,7 @@ export const NoFilters: Story = {
       intolerances: [],
       cuisine: undefined,
     },
-    onRemove: (type, value) => console.log(`Removed ${type} ${value || ""}`),
+    onRemove: fn(),
   },
 };
 
@@ -42,7 +46,7 @@ export const WithDiet: Story = {
       intolerances: [],
       cuisine: undefined,
     },
-    onRemove: (type, value) => console.log(`Removed ${type} ${value || ""}`),
+    onRemove: fn(),
   },
 };
 
@@ -53,7 +57,7 @@ export const WithCuisine: Story = {
       intolerances: [],
       cuisine: "Italian",
     },
-    onRemove: (type, value) => console.log(`Removed ${type} ${value || ""}`),
+    onRemove: fn(),
   },
 };
 
@@ -64,6 +68,6 @@ export const WithIntolerances: Story = {
       intolerances: ["Dairy", "Gluten"],
       cuisine: undefined,
     },
-    onRemove: (type, value) => console.log(`Removed ${type} ${value || ""}`),
+    onRemove: fn(),
   },
 };

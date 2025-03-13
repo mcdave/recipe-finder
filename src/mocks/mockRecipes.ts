@@ -1,0 +1,365 @@
+import { Recipe, SearchResponse } from "../types/recipe";
+
+// Mock recipes for Storybook
+export const mockRecipes: Recipe[] = [
+  {
+    id: 1,
+    title: "Spaghetti Carbonara",
+    image: "https://spoonacular.com/recipeImages/715538-556x370.jpg",
+    readyInMinutes: 30,
+    servings: 4,
+    summary:
+      "A classic Italian pasta dish with eggs, cheese, pancetta, and black pepper.",
+    instructions:
+      "1. Cook spaghetti according to package instructions.\n2. In a bowl, whisk eggs, grated cheese, and black pepper.\n3. Cook pancetta until crispy.\n4. Drain pasta and immediately add to the pancetta.\n5. Remove from heat and quickly stir in the egg mixture.\n6. Serve immediately with extra cheese and black pepper.",
+    extendedIngredients: [
+      {
+        id: 101,
+        name: "spaghetti",
+        amount: 400,
+        unit: "g",
+        original: "400g spaghetti",
+      },
+      { id: 102, name: "eggs", amount: 4, unit: "", original: "4 large eggs" },
+      {
+        id: 103,
+        name: "pancetta",
+        amount: 150,
+        unit: "g",
+        original: "150g pancetta, diced",
+      },
+      {
+        id: 104,
+        name: "Pecorino Romano",
+        amount: 50,
+        unit: "g",
+        original: "50g grated Pecorino Romano",
+      },
+      {
+        id: 105,
+        name: "black pepper",
+        amount: 2,
+        unit: "tsp",
+        original: "2 tsp freshly ground black pepper",
+      },
+    ],
+    dishTypes: ["lunch", "main course", "dinner"],
+    diets: [],
+    cuisines: ["Italian"],
+    healthScore: 45,
+  },
+  {
+    id: 2,
+    title: "Vegetarian Buddha Bowl",
+    image: "https://spoonacular.com/recipeImages/715594-556x370.jpg",
+    readyInMinutes: 25,
+    servings: 2,
+    summary:
+      "A nutritious bowl packed with roasted vegetables, quinoa, and a tahini dressing.",
+    instructions:
+      "1. Cook quinoa according to package instructions.\n2. Roast vegetables with olive oil, salt, and pepper.\n3. Prepare tahini dressing by mixing tahini, lemon juice, garlic, and water.\n4. Assemble bowls with quinoa, roasted vegetables, avocado, and seeds.\n5. Drizzle with tahini dressing and serve.",
+    extendedIngredients: [
+      {
+        id: 201,
+        name: "quinoa",
+        amount: 100,
+        unit: "g",
+        original: "100g quinoa",
+      },
+      {
+        id: 202,
+        name: "sweet potato",
+        amount: 1,
+        unit: "medium",
+        original: "1 medium sweet potato, cubed",
+      },
+      {
+        id: 203,
+        name: "broccoli",
+        amount: 1,
+        unit: "cup",
+        original: "1 cup broccoli florets",
+      },
+      {
+        id: 204,
+        name: "avocado",
+        amount: 1,
+        unit: "",
+        original: "1 ripe avocado, sliced",
+      },
+      {
+        id: 205,
+        name: "tahini",
+        amount: 2,
+        unit: "tbsp",
+        original: "2 tbsp tahini",
+      },
+      {
+        id: 206,
+        name: "lemon juice",
+        amount: 1,
+        unit: "tbsp",
+        original: "1 tbsp lemon juice",
+      },
+    ],
+    dishTypes: ["lunch", "main course"],
+    diets: ["vegetarian", "gluten free"],
+    cuisines: ["Middle Eastern"],
+    healthScore: 95,
+  },
+  {
+    id: 3,
+    title: "Classic Beef Burger",
+    image: "https://spoonacular.com/recipeImages/715417-556x370.jpg",
+    readyInMinutes: 35,
+    servings: 4,
+    summary: "A juicy homemade beef burger with all the classic toppings.",
+    instructions:
+      "1. Mix ground beef with salt, pepper, and Worcestershire sauce.\n2. Form into patties and make a slight indentation in the center.\n3. Grill for 4-5 minutes per side for medium doneness.\n4. Toast the buns lightly.\n5. Assemble burgers with lettuce, tomato, onion, and condiments of choice.",
+    extendedIngredients: [
+      {
+        id: 301,
+        name: "ground beef",
+        amount: 500,
+        unit: "g",
+        original: "500g ground beef (80% lean)",
+      },
+      {
+        id: 302,
+        name: "burger buns",
+        amount: 4,
+        unit: "",
+        original: "4 burger buns",
+      },
+      {
+        id: 303,
+        name: "lettuce",
+        amount: 4,
+        unit: "leaves",
+        original: "4 leaves of lettuce",
+      },
+      {
+        id: 304,
+        name: "tomato",
+        amount: 1,
+        unit: "large",
+        original: "1 large tomato, sliced",
+      },
+      {
+        id: 305,
+        name: "onion",
+        amount: 1,
+        unit: "small",
+        original: "1 small red onion, sliced",
+      },
+      {
+        id: 306,
+        name: "Worcestershire sauce",
+        amount: 1,
+        unit: "tbsp",
+        original: "1 tbsp Worcestershire sauce",
+      },
+    ],
+    dishTypes: ["lunch", "main course", "dinner"],
+    diets: [],
+    cuisines: ["American"],
+    healthScore: 65,
+  },
+  {
+    id: 4,
+    title: "Thai Green Curry",
+    image: "https://spoonacular.com/recipeImages/716429-556x370.jpg",
+    readyInMinutes: 40,
+    servings: 4,
+    summary:
+      "A fragrant and spicy Thai curry with coconut milk, vegetables, and your choice of protein.",
+    instructions:
+      "1. Heat oil in a large pot over medium heat.\n2. Add green curry paste and cook until fragrant.\n3. Add protein of choice and cook until browned.\n4. Pour in coconut milk and bring to a simmer.\n5. Add vegetables and cook until tender.\n6. Season with fish sauce, lime juice, and sugar.\n7. Serve with jasmine rice and garnish with Thai basil.",
+    extendedIngredients: [
+      {
+        id: 401,
+        name: "green curry paste",
+        amount: 3,
+        unit: "tbsp",
+        original: "3 tbsp green curry paste",
+      },
+      {
+        id: 402,
+        name: "coconut milk",
+        amount: 400,
+        unit: "ml",
+        original: "400ml coconut milk",
+      },
+      {
+        id: 403,
+        name: "chicken",
+        amount: 500,
+        unit: "g",
+        original: "500g chicken breast, sliced",
+      },
+      {
+        id: 404,
+        name: "bell peppers",
+        amount: 2,
+        unit: "",
+        original: "2 bell peppers, sliced",
+      },
+      {
+        id: 405,
+        name: "bamboo shoots",
+        amount: 1,
+        unit: "cup",
+        original: "1 cup bamboo shoots",
+      },
+      {
+        id: 406,
+        name: "fish sauce",
+        amount: 1,
+        unit: "tbsp",
+        original: "1 tbsp fish sauce",
+      },
+      {
+        id: 407,
+        name: "lime juice",
+        amount: 1,
+        unit: "tbsp",
+        original: "1 tbsp lime juice",
+      },
+    ],
+    dishTypes: ["main course", "dinner"],
+    diets: ["dairy free"],
+    cuisines: ["Thai", "Asian"],
+    healthScore: 75,
+  },
+  {
+    id: 5,
+    title: "Chocolate Chip Cookies",
+    image: "https://spoonacular.com/recipeImages/716429-556x370.jpg",
+    readyInMinutes: 25,
+    servings: 24,
+    summary:
+      "Classic homemade chocolate chip cookies that are soft, chewy, and loaded with chocolate chips.",
+    instructions:
+      "1. Preheat oven to 350°F (175°C).\n2. Cream together butter and sugars until light and fluffy.\n3. Beat in eggs and vanilla.\n4. Gradually add flour, baking soda, and salt.\n5. Stir in chocolate chips.\n6. Drop by rounded tablespoons onto ungreased baking sheets.\n7. Bake for 10-12 minutes until edges are golden.\n8. Cool on wire racks.",
+    extendedIngredients: [
+      {
+        id: 501,
+        name: "butter",
+        amount: 225,
+        unit: "g",
+        original: "225g unsalted butter, softened",
+      },
+      {
+        id: 502,
+        name: "brown sugar",
+        amount: 200,
+        unit: "g",
+        original: "200g brown sugar",
+      },
+      {
+        id: 503,
+        name: "white sugar",
+        amount: 100,
+        unit: "g",
+        original: "100g white sugar",
+      },
+      {
+        id: 504,
+        name: "eggs",
+        amount: 2,
+        unit: "large",
+        original: "2 large eggs",
+      },
+      {
+        id: 505,
+        name: "vanilla extract",
+        amount: 2,
+        unit: "tsp",
+        original: "2 tsp vanilla extract",
+      },
+      {
+        id: 506,
+        name: "all-purpose flour",
+        amount: 350,
+        unit: "g",
+        original: "350g all-purpose flour",
+      },
+      {
+        id: 507,
+        name: "chocolate chips",
+        amount: 300,
+        unit: "g",
+        original: "300g chocolate chips",
+      },
+    ],
+    dishTypes: ["dessert", "snack"],
+    diets: ["vegetarian"],
+    cuisines: ["American"],
+    healthScore: 25,
+  },
+  {
+    id: 6,
+    title: "Caprese Salad",
+    image: "https://spoonacular.com/recipeImages/716426-556x370.jpg",
+    readyInMinutes: 10,
+    servings: 4,
+    summary:
+      "A simple Italian salad made with fresh tomatoes, mozzarella, basil, and balsamic glaze.",
+    instructions:
+      "1. Slice tomatoes and mozzarella into 1/4 inch thick slices.\n2. Arrange tomato and mozzarella slices alternately on a serving plate.\n3. Tuck fresh basil leaves between the slices.\n4. Drizzle with olive oil and balsamic glaze.\n5. Season with salt and pepper to taste.\n6. Serve immediately.",
+    extendedIngredients: [
+      {
+        id: 601,
+        name: "tomatoes",
+        amount: 4,
+        unit: "large",
+        original: "4 large ripe tomatoes",
+      },
+      {
+        id: 602,
+        name: "mozzarella",
+        amount: 250,
+        unit: "g",
+        original: "250g fresh mozzarella",
+      },
+      {
+        id: 603,
+        name: "basil",
+        amount: 1,
+        unit: "bunch",
+        original: "1 bunch fresh basil leaves",
+      },
+      {
+        id: 604,
+        name: "olive oil",
+        amount: 2,
+        unit: "tbsp",
+        original: "2 tbsp extra virgin olive oil",
+      },
+      {
+        id: 605,
+        name: "balsamic glaze",
+        amount: 1,
+        unit: "tbsp",
+        original: "1 tbsp balsamic glaze",
+      },
+    ],
+    dishTypes: ["appetizer", "side dish", "salad"],
+    diets: ["vegetarian", "gluten free"],
+    cuisines: ["Italian", "Mediterranean"],
+    healthScore: 85,
+  },
+];
+
+// Mock search response
+export const mockSearchResponse: SearchResponse = {
+  results: mockRecipes,
+  offset: 0,
+  number: 6,
+  totalResults: 6,
+};
+
+// Mock recipe detail
+export const getMockRecipeById = (id: number): Recipe | undefined => {
+  return mockRecipes.find((recipe) => recipe.id === id);
+};

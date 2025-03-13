@@ -138,6 +138,8 @@ export const getRecipeById = async (id: number): Promise<Recipe> => {
 
   const response = await fetch(`${BASE_URL}/${id}/information?${params}`);
 
+  console.log("response", response);
+
   if (!response.ok) {
     throw new Error("Failed to fetch recipe details");
   }

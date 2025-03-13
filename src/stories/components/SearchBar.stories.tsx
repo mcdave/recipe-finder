@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 import SearchBar from "../../components/SearchBar";
 
 const meta: Meta<typeof SearchBar> = {
@@ -8,6 +9,9 @@ const meta: Meta<typeof SearchBar> = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  argTypes: {
+    onSearch: { action: "search submitted" },
+  },
 };
 
 export default meta;
@@ -15,15 +19,16 @@ type Story = StoryObj<typeof SearchBar>;
 
 export const Default: Story = {
   args: {
-    onSearch: (query) => console.log(`Searching for: ${query}`),
+    onSearch: fn(),
   },
 };
 
 export const WithCallback: Story = {
   args: {
-    onSearch: (query) => {
+    onSearch: fn((query) => {
       alert(`You searched for: ${query}`);
-    },
+      return query;
+    }),
   },
   parameters: {
     docs: {

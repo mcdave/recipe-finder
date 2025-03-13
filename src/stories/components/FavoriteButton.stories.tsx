@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import { fn } from "@storybook/test";
 import FavoriteButton from "../../components/FavoriteButton";
 import { Recipe } from "../../types/recipe";
 
@@ -9,6 +10,9 @@ const meta: Meta<typeof FavoriteButton> = {
     layout: "centered",
   },
   tags: ["autodocs"],
+  argTypes: {
+    onToggle: { action: "favorite toggled" },
+  },
 };
 
 export default meta;
@@ -29,7 +33,7 @@ export const NotFavorited: Story = {
   args: {
     recipe: sampleRecipe,
     isFavorite: false,
-    onToggle: (recipe) => console.log(`Toggled favorite for: ${recipe.title}`),
+    onToggle: fn(),
   },
 };
 
@@ -37,7 +41,7 @@ export const Favorited: Story = {
   args: {
     recipe: sampleRecipe,
     isFavorite: true,
-    onToggle: (recipe) => console.log(`Toggled favorite for: ${recipe.title}`),
+    onToggle: fn(),
   },
 };
 
@@ -45,7 +49,7 @@ export const WithCustomClass: Story = {
   args: {
     recipe: sampleRecipe,
     isFavorite: false,
-    onToggle: (recipe) => console.log(`Toggled favorite for: ${recipe.title}`),
+    onToggle: fn(),
     className: "bg-gray-100 p-4",
   },
 };
