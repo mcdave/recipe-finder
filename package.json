@@ -10,7 +10,9 @@
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -19,7 +21,15 @@
     "react-router-dom": "^7.3.0"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^3.2.5",
     "@eslint/js": "^9.21.0",
+    "@storybook/addon-essentials": "^8.6.4",
+    "@storybook/addon-interactions": "^8.6.4",
+    "@storybook/addon-onboarding": "^8.6.4",
+    "@storybook/blocks": "^8.6.4",
+    "@storybook/react": "^8.6.4",
+    "@storybook/react-vite": "^8.6.4",
+    "@storybook/test": "^8.6.4",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/vite": "^4.0.13",
     "@testing-library/jest-dom": "^6.6.3",
@@ -33,8 +43,10 @@
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "eslint-plugin-storybook": "^0.11.4",
     "globals": "^15.15.0",
     "jsdom": "^26.0.0",
+    "storybook": "^8.6.4",
     "tailwindcss": "^4.0.13",
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
@@ -45,6 +57,11 @@
     "onlyBuiltDependencies": [
       "@swc/core",
       "esbuild"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
     ]
   }
 }
