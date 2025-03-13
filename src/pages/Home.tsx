@@ -146,12 +146,13 @@ const Home = () => {
               <div className="w-full sm:flex-1">
                 <SearchBar onSearch={handleSearch} />
               </div>
-              <div className="flex items-center gap-2 self-end sm:self-auto">
+              <div className="flex justify-between gap-2 sm:self-auto w-full sm:w-auto">
                 <Link
                   to="/favorites"
                   className="inline-flex items-center justify-center p-2 rounded-lg text-gray-500 hover:text-red-500 hover:bg-gray-50 transition-colors"
                   aria-label="View favorites"
                 >
+                  <span className="text-sm font-medium mr-2">My favorites</span>
                   <HeartIcon className="w-6 h-6" />
                 </Link>
                 <button
@@ -159,6 +160,9 @@ const Home = () => {
                   className="lg:hidden inline-flex items-center justify-center p-2 rounded-lg text-gray-500 hover:text-gray-600 hover:bg-gray-50"
                   aria-label="Toggle filters"
                 >
+                  <span className="text-sm font-medium mr-2 sm:hidden">
+                    Filters
+                  </span>
                   <AdjustmentsHorizontalIcon className="w-6 h-6" />
                 </button>
               </div>
