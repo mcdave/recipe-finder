@@ -82,6 +82,9 @@ The application will be available at `http://localhost:5173`
 - `pnpm test:coverage` - Run tests with coverage report
 - `pnpm storybook` - Start Storybook development server
 - `pnpm build-storybook` - Build Storybook for production
+- `pnpm test:e2e` - Run end-to-end tests with Playwright
+- `pnpm test:e2e:ui` - Run end-to-end tests with Playwright UI mode
+- `pnpm test:e2e:debug` - Run end-to-end tests with Playwright debug mode
 
 ## Design Decisions
 
@@ -103,6 +106,7 @@ The application will be available at `http://localhost:5173`
 
 - **Unit Tests**: Components and utilities are tested with Vitest and React Testing Library
 - **Integration Tests**: API integration is tested with MSW for reliable and fast tests
+- **E2E Tests**: End-to-end testing with Playwright to verify user flows and interactions
 - **Storybook**: Component documentation and visual testing through Storybook
 
 ### Project Structure
@@ -138,3 +142,28 @@ Each directory serves a specific purpose:
 - `mocks/`: Contains mock data for testing and development
 - `stories/`: Contains Storybook stories for component documentation
 - `test/`: Contains test utilities and setup files
+
+## End-to-End Testing
+
+The application uses Playwright for end-to-end testing of user flows. The tests are located in the `e2e` directory and cover the following scenarios:
+
+- **Search Flow**: Testing the search functionality, navigation to recipe details, and handling of empty searches
+- **Favorites Flow**: Testing adding/removing favorites and persistence across page reloads
+- **Filters Flow**: Testing filtering recipes by dietary restrictions and intolerances
+- **Responsive Design**: Testing the application's responsiveness on different screen sizes
+- **Accessibility**: Testing keyboard navigation and screen reader compatibility
+
+### Running E2E Tests
+
+To run the end-to-end tests:
+
+```bash
+# Run all E2E tests
+pnpm test:e2e
+
+# Run tests with UI mode for visual debugging
+pnpm test:e2e:ui
+
+# Run tests with debug mode
+pnpm test:e2e:debug
+```

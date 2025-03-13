@@ -54,6 +54,7 @@ const RecipeCard = ({
           onClick(recipe.id);
         }
       }}
+      data-testid="recipe-card"
     >
       {/* Favorite button */}
       {onFavoriteToggle && (

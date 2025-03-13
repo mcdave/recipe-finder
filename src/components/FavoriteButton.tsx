@@ -25,6 +25,7 @@ const FavoriteButton = ({
       onClick={handleClick}
       className={`p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white transition-colors group ${className}`}
       aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
+      data-testid={`favorite-button-${recipe.id}`}
     >
       {isFavorite ? (
         <HeartIconSolid className="w-5 h-5 text-brand-tomato-500 group-hover:text-brand-tomato-600 transition-colors" />

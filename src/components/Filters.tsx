@@ -175,10 +175,14 @@ const Filters = ({ filters, onChange, onClear }: FiltersProps) => {
             value={filters.diet || ""}
             onChange={(e) => handleDietChange(e.target.value)}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-brand-herb-500 focus:ring-brand-herb-500"
+            role="select"
+            aria-label="Diet"
           >
-            <option value="">Any</option>
+            <option role="option" value="">
+              Any
+            </option>
             {DIETS.map(([diet, emoji]) => (
-              <option key={diet} value={diet}>
+              <option role="option" key={diet} value={diet}>
                 {emoji} {diet}
               </option>
             ))}
@@ -221,10 +225,14 @@ const Filters = ({ filters, onChange, onClear }: FiltersProps) => {
             value={filters.cuisine || ""}
             onChange={(e) => handleCuisineChange(e.target.value)}
             className="w-full rounded-md border-gray-300 shadow-sm focus:border-brand-herb-500 focus:ring-brand-herb-500"
+            role="select"
+            aria-label="Cuisine"
           >
-            <option value="">Any</option>
+            <option role="option" value="">
+              Any
+            </option>
             {CUISINES.map(([cuisine, emoji]) => (
-              <option key={cuisine} value={cuisine}>
+              <option role="option" key={cuisine} value={cuisine}>
                 {emoji} {cuisine}
               </option>
             ))}
