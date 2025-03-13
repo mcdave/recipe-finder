@@ -1,125 +1,140 @@
-# React + TypeScript + Vite
+# Recipe Finder / Savory circuits
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application that helps users discover recipes based on ingredients, dietary restrictions, and cuisine preferences. Built with React, TypeScript, and the Spoonacular API.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Search recipes by ingredients or recipe name
+- Filter recipes by:
+  - Dietary restrictions (vegetarian, vegan, gluten-free, etc.)
+  - Cuisine type
+  - Food intolerances
+- Save favorite recipes
+- Detailed recipe view with ingredients and instructions
+- Responsive design for all devices
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend Framework**: React 19 with TypeScript
+- **Build Tool**: Vite 6
+- **Styling**: TailwindCSS 4
+- **Routing**: React Router DOM 7
+- **Testing**:
+  - Vitest for unit testing
+  - React Testing Library for component testing
+  - MSW for API mocking
+- **Development Tools**:
+  - ESLint for code linting
+  - Storybook for component development and documentation
+  - TypeScript for type safety
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+## API Integration
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The application uses the [Spoonacular API](https://spoonacular.com/food-api/docs) for recipe data. To use the application:
 
-```js
-// eslint.config.js
-import reactX from "eslint-plugin-react-x";
-import reactDom from "eslint-plugin-react-dom";
+1. Sign up for a Spoonacular API key at https://spoonacular.com/food-api/console#Dashboard
+2. Create a `.env` file in the project root with your API key:
+   ```
+   VITE_SPOONACULAR_API_KEY=your_api_key_here
+   ```
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    "react-x": reactX,
-    "react-dom": reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs["recommended-typescript"].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+### API Limitations
 
-## Testing
+This particular API has a limit for the free users of 150 points per day so if you test it a lot maybe it's going to reach the limit but you can see how the pages and components behave in the storybook section that mocks the api calls
 
-This project uses [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for unit testing.
+## Getting Started
 
-### Running Tests
+### Prerequisites
 
-To run all tests once:
+- Node.js 18 or higher
+- pnpm (recommended) or npm
 
-```bash
-pnpm test
-```
+### Installation
 
-To run tests in watch mode (tests will re-run when files change):
+1. Clone the repository:
 
-```bash
-pnpm test:watch
-```
+   ```bash
+   git clone https://github.com/yourusername/recipe-finder.git
+   cd recipe-finder
+   ```
 
-To run tests with coverage report:
+2. Install dependencies:
 
-```bash
-pnpm test:coverage
-```
+   ```bash
+   pnpm install
+   ```
 
-### Test Structure
+3. Create a `.env` file with your Spoonacular API key (see API Integration section)
 
-Tests are located in `__tests__` directories next to the components they test. For example:
+4. Start the development server:
+   ```bash
+   pnpm dev
+   ```
+
+The application will be available at `http://localhost:5173`
+
+### Available Scripts
+
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm test` - Run tests
+- `pnpm test:watch` - Run tests in watch mode
+- `pnpm test:coverage` - Run tests with coverage report
+- `pnpm storybook` - Start Storybook development server
+- `pnpm build-storybook` - Build Storybook for production
+
+## Design Decisions
+
+### Architecture
+
+- **Component-Based Structure**: The application follows a modular component architecture for better maintainability and reusability
+- **Type Safety**: TypeScript is used throughout the project to ensure type safety and better developer experience
+- **State Management**: Local state and React hooks are used for state management, keeping the application simple and maintainable
+- **API Layer**: Centralized API service layer with proper error handling and type definitions
+
+### User Experience
+
+- **Persistent State**: Search results and filters are persisted in localStorage for a better user experience
+- **Responsive Design**: Mobile-first approach with TailwindCSS for consistent styling across devices
+- **Loading States**: Proper loading states and error handling for API calls
+- **Accessibility**: Semantic HTML and ARIA attributes for better accessibility
+
+### Testing Strategy
+
+- **Unit Tests**: Components and utilities are tested with Vitest and React Testing Library
+- **Integration Tests**: API integration is tested with MSW for reliable and fast tests
+- **Storybook**: Component documentation and visual testing through Storybook
+
+### Project Structure
+
+The project follows a modular and organized structure in the `src` directory:
 
 ```
 src/
-  components/
-    Button.tsx
-    __tests__/
-      Button.test.tsx
+├── assets/          # Static assets like images, fonts, etc.
+├── components/      # Reusable UI components
+│   └── __tests__/  # Component-specific tests
+├── hooks/          # Custom React hooks
+├── mocks/          # Mock data for testing and development
+├── pages/          # Page components (routes)
+├── services/       # API and external service integrations
+├── stories/        # Storybook stories for components
+├── test/           # Test utilities and setup
+├── types/          # TypeScript type definitions
+├── utils/          # Utility functions and helpers
+├── App.tsx         # Main application component
+├── main.tsx        # Application entry point
+└── index.css       # Global styles
 ```
 
-### Writing Tests
+Each directory serves a specific purpose:
 
-When writing tests, follow these guidelines:
-
-1. Test component rendering and appearance
-2. Test user interactions (clicks, typing, etc.)
-3. Test component behavior (state changes, callbacks, etc.)
-4. Mock external dependencies when necessary
-
-Example test for a component:
-
-```tsx
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import MyComponent from "../MyComponent";
-
-describe("MyComponent", () => {
-  it("renders correctly", () => {
-    render(<MyComponent />);
-    expect(screen.getByText("Hello World")).toBeInTheDocument();
-  });
-
-  it("calls onClick when button is clicked", async () => {
-    const mockOnClick = vi.fn();
-    const user = userEvent.setup();
-
-    render(<MyComponent onClick={mockOnClick} />);
-
-    await user.click(screen.getByRole("button"));
-    expect(mockOnClick).toHaveBeenCalled();
-  });
-});
-```
+- `components/`: Contains reusable UI components like `RecipeCard`, `SearchBar`, etc.
+- `pages/`: Contains the main page components (`Home`, `RecipeDetail`, `Favorites`)
+- `services/`: Contains API integration code and external service calls
+- `hooks/`: Contains custom React hooks for shared logic
+- `types/`: Contains TypeScript interfaces and type definitions
+- `utils/`: Contains helper functions and utilities
+- `mocks/`: Contains mock data for testing and development
+- `stories/`: Contains Storybook stories for component documentation
+- `test/`: Contains test utilities and setup files

@@ -28,3 +28,6 @@ dist-ssr
 .env.*.local
 
 *storybook.log
+
+# Test coverage
+coverage/

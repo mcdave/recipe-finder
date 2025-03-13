@@ -14,8 +14,6 @@ export const handlers = [
       const { id } = params;
       const recipe = mockRecipes.find((r) => r.id === Number(id));
 
-      console.log("recipe", params, recipe);
-
       if (!recipe) {
         return new HttpResponse(null, { status: 404 });
       }
