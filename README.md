@@ -24,31 +24,102 @@ export default tseslint.config({
   languageOptions: {
     // other options...
     parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
       tsconfigRootDir: import.meta.dirname,
     },
   },
-})
+});
 ```
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
 ```js
 // eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import reactX from "eslint-plugin-react-x";
+import reactDom from "eslint-plugin-react-dom";
 
 export default tseslint.config({
   plugins: {
     // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
+    "react-x": reactX,
+    "react-dom": reactDom,
   },
   rules: {
     // other rules...
     // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
+    ...reactX.configs["recommended-typescript"].rules,
     ...reactDom.configs.recommended.rules,
   },
-})
+});
+```
+
+## Testing
+
+This project uses [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for unit testing.
+
+### Running Tests
+
+To run all tests once:
+
+```bash
+pnpm test
+```
+
+To run tests in watch mode (tests will re-run when files change):
+
+```bash
+pnpm test:watch
+```
+
+To run tests with coverage report:
+
+```bash
+pnpm test:coverage
+```
+
+### Test Structure
+
+Tests are located in `__tests__` directories next to the components they test. For example:
+
+```
+src/
+  components/
+    Button.tsx
+    __tests__/
+      Button.test.tsx
+```
+
+### Writing Tests
+
+When writing tests, follow these guidelines:
+
+1. Test component rendering and appearance
+2. Test user interactions (clicks, typing, etc.)
+3. Test component behavior (state changes, callbacks, etc.)
+4. Mock external dependencies when necessary
+
+Example test for a component:
+
+```tsx
+import { describe, it, expect, vi } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import MyComponent from "../MyComponent";
+
+describe("MyComponent", () => {
+  it("renders correctly", () => {
+    render(<MyComponent />);
+    expect(screen.getByText("Hello World")).toBeInTheDocument();
+  });
+
+  it("calls onClick when button is clicked", async () => {
+    const mockOnClick = vi.fn();
+    const user = userEvent.setup();
+
+    render(<MyComponent onClick={mockOnClick} />);
+
+    await user.click(screen.getByRole("button"));
+    expect(mockOnClick).toHaveBeenCalled();
+  });
+});
 ```
