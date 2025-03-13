@@ -191,7 +191,7 @@ const Filters = ({ filters, onChange, onClear }: FiltersProps) => {
           onToggle={() => toggleSection("intolerances")}
           badge={filters.intolerances?.length || 0}
         >
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-1">
             {INTOLERANCES.map(([intolerance, emoji]) => (
               <label
                 key={intolerance}
