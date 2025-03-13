@@ -153,6 +153,11 @@ The application uses Playwright for end-to-end testing of user flows. The tests 
 - **Responsive Design**: Testing the application's responsiveness on different screen sizes
 - **Accessibility**: Testing keyboard navigation and screen reader compatibility
 
+## Devices tested
+
+- Desktop: Chrome, Firefox, Webkit
+- Mobile: Chrome, Webkit
+
 ### Running E2E Tests
 
 To run the end-to-end tests:

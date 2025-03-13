@@ -80,7 +80,18 @@ test.beforeEach(async ({ page }) => {
   await page.goto("/");
 });
 
+// Helper function to ensure filters are visible on mobile
+async function ensureFiltersVisible(page) {
+  // Check if we're in mobile view (filters toggle button is visible)
+  const toggleButton = page.getByRole("button", { name: "Toggle filters" });
+  if (await toggleButton.isVisible()) {
+    await toggleButton.click();
+  }
+}
+
 test("filter sections expand and collapse correctly", async ({ page }) => {
+  await ensureFiltersVisible(page);
+
   // Initially all sections should be collapsed
   await expect(page.getByRole("combobox", { name: "Diet" })).not.toBeVisible();
   await expect(
@@ -109,6 +120,8 @@ test("filter sections expand and collapse correctly", async ({ page }) => {
 });
 
 test("filter flow - dietary restrictions with badge", async ({ page }) => {
+  await ensureFiltersVisible(page);
+
   // Open diet section
   await page.getByRole("button", { name: "Diet" }).click();
 
@@ -134,6 +147,8 @@ test("filter flow - dietary restrictions with badge", async ({ page }) => {
 });
 
 test("filter flow - multiple intolerances with badge", async ({ page }) => {
+  await ensureFiltersVisible(page);
+
   // Open intolerances section
   await page.getByRole("button", { name: "Intolerances" }).click();
 
@@ -152,6 +167,8 @@ test("filter flow - multiple intolerances with badge", async ({ page }) => {
 });
 
 test("filter flow - cuisine selection with badge", async ({ page }) => {
+  await ensureFiltersVisible(page);
+
   // Open cuisine section
   await page.getByRole("button", { name: "Cuisine" }).click();
 
@@ -177,6 +194,8 @@ test("filter flow - cuisine selection with badge", async ({ page }) => {
 });
 
 test("filter flow - clear all filters", async ({ page }) => {
+  await ensureFiltersVisible(page);
+
   // Open filter sections
   await page.getByRole("button", { name: "Diet" }).click();
   await page.getByRole("button", { name: "Intolerances" }).click();
