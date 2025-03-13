@@ -1,7 +1,7 @@
 import { Recipe } from "../types/recipe";
-import { useState } from "react";
-import { HeartIcon as HeartIconOutline } from "@heroicons/react/24/outline";
-import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
+import { useState, useEffect } from "react";
+import FavoriteButton from "./FavoriteButton";
+import { isRecipeFavorite } from "../utils/favoriteUtils";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -13,19 +13,29 @@ interface RecipeCardProps {
 const RecipeCard = ({
   recipe,
   onClick,
-  isFavorite = false,
+  isFavorite: propIsFavorite,
   onFavoriteToggle,
 }: RecipeCardProps) => {
   const [imageError, setImageError] = useState(false);
   const [imageLoading, setImageLoading] = useState(true);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    // If isFavorite is provided as a prop, use it
+    // Otherwise, check localStorage
+    if (propIsFavorite !== undefined) {
+      setIsFavorite(propIsFavorite);
+    } else {
+      setIsFavorite(isRecipeFavorite(recipe));
+    }
+  }, [recipe, propIsFavorite]);
 
   const handleImageError = () => {
     setImageError(true);
     setImageLoading(false);
   };
 
-  const handleFavoriteClick = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent card click event
+  const handleFavoriteToggle = (recipe: Recipe) => {
     if (onFavoriteToggle) {
       onFavoriteToggle(recipe);
     }
@@ -47,17 +57,13 @@ const RecipeCard = ({
     >
       {/* Favorite button */}
       {onFavoriteToggle && (
-        <button
-          onClick={handleFavoriteClick}
-          className="absolute top-2 right-2 p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white transition-colors z-10 group"
-          aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-        >
-          {isFavorite ? (
-            <HeartIconSolid className="w-5 h-5 text-red-500 group-hover:text-red-600 transition-colors" />
-          ) : (
-            <HeartIconOutline className="w-5 h-5 text-gray-700 group-hover:text-red-500 transition-colors" />
-          )}
-        </button>
+        <div className="absolute top-2 right-2 z-10">
+          <FavoriteButton
+            recipe={recipe}
+            isFavorite={isFavorite}
+            onToggle={handleFavoriteToggle}
+          />
+        </div>
       )}
 
       <div className="relative aspect-video">

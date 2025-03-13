@@ -3,13 +3,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getRecipeById } from "../services/recipeService";
 import { Recipe } from "../types/recipe";
 import Logo from "../components/Logo";
+import FavoriteButton from "../components/FavoriteButton";
+import {
+  isRecipeFavorite,
+  toggleFavorite as toggleFavoriteUtil,
+} from "../utils/favoriteUtils";
 import {
   ArrowLeftIcon,
   ClockIcon,
   UserIcon,
-  HeartIcon,
 } from "@heroicons/react/24/outline";
-import { HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 
 const RecipeDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -36,10 +39,7 @@ const RecipeDetail = () => {
         setRecipe(recipeData);
 
         // Check if recipe is in favorites
-        const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-        setIsFavorite(
-          favorites.some((fav: Recipe) => fav.id === recipeData.id)
-        );
+        setIsFavorite(isRecipeFavorite(recipeData));
       } catch (err) {
         setError(
           err instanceof Error ? err.message : "Failed to load recipe details"
@@ -57,24 +57,9 @@ const RecipeDetail = () => {
     setImageLoading(false);
   };
 
-  const toggleFavorite = () => {
-    if (!recipe) return;
-
-    const favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
-
-    if (isFavorite) {
-      // Remove from favorites
-      const updatedFavorites = favorites.filter(
-        (fav: Recipe) => fav.id !== recipe.id
-      );
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      setIsFavorite(false);
-    } else {
-      // Add to favorites
-      const updatedFavorites = [...favorites, recipe];
-      localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
-      setIsFavorite(true);
-    }
+  const handleToggleFavorite = (recipe: Recipe) => {
+    const result = toggleFavoriteUtil(recipe);
+    setIsFavorite(result.isFavorite);
   };
 
   const handleGoBack = () => {
@@ -153,19 +138,13 @@ const RecipeDetail = () => {
                 >
                   <ArrowLeftIcon className="w-5 h-5 text-gray-700" />
                 </button>
-                <button
-                  onClick={toggleFavorite}
-                  className="p-2 bg-white/90 backdrop-blur-sm rounded-full shadow-md hover:bg-white transition-colors group"
-                  aria-label={
-                    isFavorite ? "Remove from favorites" : "Add to favorites"
-                  }
-                >
-                  {isFavorite ? (
-                    <HeartIconSolid className="w-5 h-5 text-red-500 group-hover:text-red-600 transition-colors" />
-                  ) : (
-                    <HeartIcon className="w-5 h-5 text-gray-700 group-hover:text-red-500 transition-colors" />
-                  )}
-                </button>
+                {recipe && (
+                  <FavoriteButton
+                    recipe={recipe}
+                    isFavorite={isFavorite}
+                    onToggle={handleToggleFavorite}
+                  />
+                )}
               </div>
             </div>
 
